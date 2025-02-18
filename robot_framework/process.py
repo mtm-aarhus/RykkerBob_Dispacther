@@ -69,15 +69,13 @@ def process(orchestrator_connection: OrchestratorConnection, queue_element: Queu
             RykkerNummer = None
 
             if not task_description:
-                print(f"Anvender: {case_number}")
+                orchestrator_connection.log_info(f"Anvender: {case_number} til at udsende 1.rykker")
                 RykkerNummer = 1
             elif re.search(r"^Rykkerskrivelse udført af robot$", task_description):
-                print("Beskrivelsesfeltet indeholder 1. rykker")
-                print(f"Anvender: {case_number} til at udsende 2. rykker")
+                orchestrator_connection.log_info(f"Anvender: {case_number} til at udsende 2. rykker")
                 RykkerNummer = 2
             elif re.search(r"^2. Rykkerskrivelse udført af robot$", task_description):
-                print("Beskrivelsesfeltet indeholder 2. rykker")
-                print(f"Anvender: {case_number} til at udsende 3. rykker")
+                orchestrator_connection.log_info(f"Anvender: {case_number} til at udsende 3. rykker")
                 RykkerNummer = 3
             else:
                 print(f"Anvender ikke: {case_number}")
