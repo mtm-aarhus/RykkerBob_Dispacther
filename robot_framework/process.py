@@ -87,7 +87,9 @@ def process(orchestrator_connection: OrchestratorConnection, queue_element: Queu
                     "caseUuid": task.get("caseUuid"),
                     "taskStartDate": task.get("taskStartDate"),
                     "taskDeadline": task.get("taskDeadline"),
-                    "caseWorkerId": task.get("caseworker", {}).get("kspIdentity", {}).get("novaUserId"),
+                    "novaUserId": task.get("caseworker", {}).get("kspIdentity", {}).get("novaUserId"),
+                    "fullName": task.get("caseworker", {}).get("kspIdentity", {}).get("fullName"),
+                    "racfId": task.get("caseworker", {}).get("kspIdentity", {}).get("racfId"),
                     "RykkerNummer": int(RykkerNummer)
                 }
                 queue_items.append({
