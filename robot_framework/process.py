@@ -35,7 +35,7 @@ def process(orchestrator_connection: OrchestratorConnection, queue_element: Queu
             "taskList": [{"taskDescription": True}]
         },
         "title": "*afventer påbegyndelse*",
-        "fromCreateDate":"2025-04-28T00:00:00+00:00",
+        #"fromCreateDate":"2025-04-28T00:00:00+00:00",
         "caseUuid":"9c60ce1c-5f57-44ab-b805-44800017000c",
         "toDeadlineDate": CurrentDate,
         "statusCode": ["S"],
