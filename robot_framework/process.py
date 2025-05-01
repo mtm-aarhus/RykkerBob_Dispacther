@@ -24,8 +24,7 @@ def process(orchestrator_connection: OrchestratorConnection, queue_element: Queu
 
     # ---- Henter Sagsnummer og Sagsbeskrivelse ---- 
     TransactionID = str(uuid.uuid4())
-    CurrentDate = datetime.now().strftime("%Y-%m-%dT00:00:00")
-
+    CurrentDate = datetime.now().strftime("%Y-%m-%dT00:00:00+00:00")
     # Construct the JSON payload
     payload = {
         "common": {"transactionId": TransactionID},
