@@ -1,61 +1,67 @@
-# Robot-Framework V3
 
-This repo is meant to be used as a template for robots made for [OpenOrchestrator](https://github.com/itk-dev-rpa/OpenOrchestrator).
+# 📄 README
 
-## Quick start
+## Rykker Dispatcher Robot
 
-1. To use this template simply use this repo as a template (see [Creating a repository from a template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)).
-__Don't__ include all branches.
+**Rykker Dispatcher** is an automation for **Teknik og Miljø, Aarhus Kommune**. It scans KMD Nova for overdue cases, determines the appropriate rykker level, and queues tasks for further processing in OpenOrchestrator.
 
-2. Go to `robot_framework/__main__.py` and choose between the linear framework or queue based framework.
+---
 
-3. Implement all functions in the files:
-    * `robot_framework/initialize.py`
-    * `robot_framework/reset.py`
-    * `robot_framework/process.py`
+## 🚀 Features
 
-4. Change `config.py` to your needs.
+✅ **KMD Nova Integration**  
+- Connects to KMD Nova REST API  
+- Retrieves all active tasks with status "S"  
 
-5. Fill out the dependencies in the `pyproject.toml` file with all packages needed by the robot.
+🧾 **Case Classification**  
+- Determines which rykker (1, 2, or 3) should be sent  
+- Identifies cases that do not require action  
 
-6. Feel free to add more files as needed. Remember that any additional python files must
-be located in the folder `robot_framework` or a subfolder of it.
+📤 **Queue Creation**  
+- Generates queue items containing:
+  - Case metadata
+  - Task and case UUIDs
+  - Rykker number
+  - Assigned caseworker information  
 
-When the robot is run from OpenOrchestrator the `main.py` file is run which results
-in the following:
-1. The working directory is changed to where `main.py` is located.
-2. A virtual environment is automatically setup with the required packages.
-3. The framework is called passing on all arguments needed by [OpenOrchestrator](https://github.com/itk-dev-rpa/OpenOrchestrator).
+🔐 **Credential Management**  
+- Automatically refreshes access tokens as needed  
 
-## Requirements
-Minimum python version 3.10
+---
 
-## Flow
+## 🧭 Process Flow
 
-This framework contains two different flows: A linear and a queue based.
-You should only ever use one at a time. You choose which one by going into `robot_framework/__main__.py`
-and uncommenting the framework you want. They are both disabled by default and an error will be
-raised to remind you if you don't choose.
+1. **Token Management**
+   - Retrieves or refreshes KMD OAuth tokens (`GetKmdAcessToken.py`)
+2. **Task Query**
+   - Calls KMD Nova `/Task/GetList` endpoint
+   - Fetches tasks with deadline equal to today
+3. **Classification**
+   - Determines rykker level by inspecting task descriptions
+4. **Queue Preparation**
+   - Packages relevant data into queue elements
+5. **Queue Submission**
+   - Creates all queue items in bulk in OpenOrchestrator
 
-### Linear Flow
+---
 
-The linear framework is used when a robot is just going from A to Z without fetching jobs from an
-OpenOrchestrator queue.
-The flow of the linear framework is sketched up in the following illustration:
+## 🔐 Privacy & Security
 
-![Linear Flow diagram](Robot-Framework.svg)
+- All API requests use HTTPS
+- Credentials and tokens are stored securely in OpenOrchestrator
+- No case data is persisted locally
 
-### Queue Flow
+---
 
-The queue framework is used when the robot is doing multiple bite-sized tasks defined in an
-OpenOrchestrator queue.
-The flow of the queue framework is sketched up in the following illustration:
+## ⚙️ Dependencies
 
-![Queue Flow diagram](Robot-Queue-Framework.svg)
+- Python 3.10+
+- `requests`
+- `pandas`
 
-## Linting and Github Actions
+---
 
-This template is also setup with flake8 and pylint linting in Github Actions.
-This workflow will trigger whenever you push your code to Github.
-The workflow is defined under `.github/workflows/Linting.yml`.
+## 👷 Maintainer
 
+Gustav Chatterton  
+*Digital udvikling, Teknik og Miljø, Aarhus Kommune*
