@@ -66,6 +66,8 @@ def process(orchestrator_connection: OrchestratorConnection, queue_element: Queu
         # Iterate through task list
         for task in data.get("taskList", []):
             case_number = task.get("caseNumber", "Unknown")
+            if case_number == "S2024-59792":
+                continue
             task_description = task.get("taskDescription", "")
             RykkerNummer = None
 
